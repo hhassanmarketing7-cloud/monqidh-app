@@ -1,410 +1,299 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منقذ - طلب النجدة</title>
-    <!-- استدعاء خط Cairo للحصول على مظهر مطابق للتصميم -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* التنسيق العام */
-        * {
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+import 'dart:async';
+import 'package:flutter/material.dart';
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #F6F7F9; /* خلفية الصفحة البيضاء (الواجهة الأولى) */
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
+void main() {
+  runApp(const MonqidhApp());
+}
 
-        /* --- الواجهة الأولى: الشاشة الرئيسية البيضاء --- */
-        #main-screen {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-        }
+class MonqidhApp extends StatelessWidget {
+  const MonqidhApp({Key? key}) : super(key: key);
 
-        /* الهيدر العلوي الأبيض */
-        .header {
-            padding: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'منقذ',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        primarySwatch: Colors.red,
+      ),
+      home: const Directionality(
+        textDirection: TextDirection.rtl,
+        child: HomeScreen(),
+      ),
+    );
+  }
+}
 
-        .header .user-info {
-            display: flex;
-            align-items: center;
-        }
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
-        .header .user-name {
-            font-size: 16px;
-            font-weight: 800;
-            color: #2D3436;
-            margin-left: 8px; /* مسافة بين الاسم والتحية */
-        }
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-        .header .greeting {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2D3436;
-        }
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isCountingDown = false;
+  int _counter = 5;
+  Timer? _timer;
 
-        .header .status {
-            font-size: 13px;
-            color: #636E72;
-            font-weight: 400;
-        }
+  void _startEmergency() {
+    setState(() {
+      _isCountingDown = true;
+      _counter = 5;
+    });
 
-        .header .bell-icon {
-            font-size: 20px;
-            color: #2D3436;
-            background: #F1F2F6;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_counter > 1) {
+        setState(() {
+          _counter--;
+        });
+      } else {
+        _timer?.cancel();
+        _executeEmergencyAction();
+      }
+    });
+  }
 
-        /* محتوى شاشة النجدة */
-        .sos-area {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+  void _cancelEmergency() {
+    _timer?.cancel();
+    setState(() {
+      _isCountingDown = false;
+      _counter = 5;
+    });
+  }
 
-        .sos-outer-circle {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            background-color: rgba(220, 53, 69, 0.15); /* هالة خفيفة */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: pulse-ring 2s infinite;
-        }
+  void _executeEmergencyAction() {
+    setState(() {
+      _isCountingDown = false;
+    });
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('تم إرسال بلاغ الطوارئ'),
+        content: const Text('تم تحديد موقعك وإرسال رسالة الاستغاثة لجهات الاتصال بنجاح.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('حسناً'),
+          )
+        ],
+      ),
+    );
+  }
 
-        .sos-inner-button {
-            width: 210px;
-            height: 210px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #FF2E4C 0%, #C8102E 100%);
-            border: 6px solid #ffffff;
-            box-shadow: 0 12px 30px rgba(200, 16, 46, 0.45);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.1s;
-            color: #ffffff;
-        }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: _isCountingDown ? const Color(0xFFC8102E) : const Color(0xFFF8F9FA),
+      body: _isCountingDown ? _buildCountdownScreen() : _buildMainScreen(),
+    );
+  }
 
-        .sos-inner-button:active {
-            transform: scale(0.94);
-        }
+  Widget _buildMainScreen() {
+    return SafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const CircleAvatar(
+                      backgroundColor: Color(0xFFEFEFEF),
+                      child: Icon(Icons.person, color: Colors.grey),
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, // تم تصحيح الخطأ هنا
+                      children: const [
+                        Text('أهلاً بك 👋', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+                        Text('نتمنى لك يوماً آمناً', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                      ],
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: const Icon(Icons.notifications_none, color: Colors.black87),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
 
-        .sos-inner-button .sos-icon {
-            font-size: 50px;
-            margin-bottom: 8px;
-        }
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: _startEmergency,
+                  child: Container(
+                    width: 230,
+                    height: 230,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFFC8102E).withOpacity(0.12),
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 180,
+                        height: 180,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: const RadialGradient(
+                            colors: [Color(0xFFFF2E4C), Color(0xFFC8102E)],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFC8102E).withOpacity(0.4),
+                              blurRadius: 20,
+                              spreadRadius: 5,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.warning_amber_rounded, size: 45, color: Colors.white),
+                            SizedBox(height: 8),
+                            Text(
+                              'طلب النجدة',
+                              style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'اضغط عند الحاجة للمساعدة',
+                  style: TextStyle(color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
 
-        .sos-inner-button .sos-text {
-            font-size: 24px;
-            font-weight: 800;
-        }
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(top: BorderSide(color: Color(0xFFEEEEEE))),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                _NavItem(icon: Icons.person_outline, label: 'الملف الشخصي', isActive: false),
+                _NavItem(icon: Icons.group_outlined, label: 'جهات الطوارئ', isActive: false),
+                _NavItem(icon: Icons.home, label: 'الرئيسية', isActive: true),
+                _NavItem(icon: Icons.settings_outlined, label: 'الإعدادات', isActive: false),
+                _NavItem(icon: Icons.list_alt, label: 'السجل', isActive: false),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-        .sos-instruction {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #636E72;
-            font-weight: 600;
-        }
+  Widget _buildCountdownScreen() {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'طلب النجدة',
+                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: _cancelEmergency,
+                  child: const Text('إلغاء', style: TextStyle(color: Colors.white, fontSize: 16)),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                const Text(
+                  'سيتم إرسال طلب النجدة خلال',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  width: 170,
+                  height: 170,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '$_counter',
+                      style: const TextStyle(
+                        fontSize: 85,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFC8102E),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: OutlinedButton(
+                    onPressed: _cancelEmergency,
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.white, width: 2),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    ),
+                    child: const Text('إلغاء', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'سيتم إرسال موقعك الحالي إلى جهات الطوارئ المحددة',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-        /* القائمة التبويبية السفلية */
-        .bottom-nav {
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #EAECEF;
-        }
+class _NavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isActive;
 
-        .nav-item {
-            color: #A0AAB8;
-            text-decoration: none;
-            font-size: 11px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            font-weight: 600;
-        }
+  const _NavItem({required this.icon, required this.label, required this.isActive});
 
-        .nav-item .nav-icon {
-            font-size: 19px;
-        }
-
-        .nav-item.active {
-            color: #C8102E;
-        }
-
-        /* --- الواجهة الثانية: شاشة العداد الحمراء --- */
-        #count-down-screen {
-            display: none; /* مخفية في البداية */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #C8102E; /* خلفية الصفحة الحمراء (الشاشة الخامسة) */
-            flex-direction: column;
-            color: white;
-            padding: 25px;
-            z-index: 1000;
-        }
-
-        .cd-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .cd-header h2 {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        .cd-header .cancel-text {
-            font-size: 14px;
-            color: #ffffff;
-            opacity: 0.8;
-            cursor: pointer;
-        }
-
-        .cd-timer-section {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cd-sub-title {
-            font-size: 16px;
-            font-weight: 600;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-
-        .cd-description {
-            font-size: 13px;
-            opacity: 0.8;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .cd-timer-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .cd-number {
-            font-size: 100px;
-            font-weight: 800;
-            color: #C8102E;
-        }
-
-        .cd-cancel-button {
-            background-color: transparent;
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            border-radius: 30px;
-            padding: 12px 0;
-            width: 100%;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: background 0.2s;
-        }
-
-        .cd-cancel-button:active {
-            background-color: rgba(255,255,255,0.1);
-        }
-
-        .cd-bottom-info {
-            font-size: 12px;
-            text-align: center;
-            opacity: 0.7;
-            padding: 0 15px;
-        }
-
-        /* أنيميشن */
-        @keyframes pulse-ring {
-            0% { transform: scale(0.98); opacity: 0.8; }
-            50% { transform: scale(1.03); opacity: 1; }
-            100% { transform: scale(0.98); opacity: 0.8; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- الواجهة الأولى (البيضاء/الشاشة الرئيسية) -->
-    <div id="main-screen">
-        <div class="header">
-            <div class="user-info">
-                <span class="greeting">أهلاً بك 👋</span>
-                <!-- غيّر هذا الاسم فقط لوضع اسمك الحقيقي -->
-                <span class="user-name">ضيف</span>
-            </div>
-            <div class="bell-icon">🔔</div>
-        </div>
-
-        <div class="sos-area">
-            <div class="sos-outer-circle">
-                <div class="sos-inner-button" onclick="startEmergencyCountDown()">
-                    <div class="sos-icon">🚨</div>
-                    <span class="sos-text">طلب النجدة</span>
-                </div>
-            </div>
-            <p class="sos-instruction">اضغط عند الحاجة للمساعدة</p>
-        </div>
-
-        <div class="bottom-nav">
-            <a href="#" class="nav-item">
-                <span class="nav-icon">👤</span>
-                <span>الملف الشخصي</span>
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">👥</span>
-                <span>جهات الطوارئ</span>
-            </a>
-            <a href="#" class="nav-item active">
-                <span class="nav-icon">🏠</span>
-                <span>الرئيسية</span>
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">⚙️</span>
-                <span>الإعدادات</span>
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📋</span>
-                <span>السجل</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- الواجهة الثانية (الحمراء/العداد التنازلي) -->
-    <div id="count-down-screen">
-        <div class="cd-header">
-            <h2>طلب النجدة</h2>
-            <span class="cancel-text" onclick="cancelEmergency()">إلغاء</span>
-        </div>
-
-        <div class="cd-timer-section">
-            <div class="cd-sub-title">جاري إرسال طلب النجدة</div>
-            <div class="cd-description">سيتم إرسال بلاغك الجغرافي الدقيق إلى جهات الطوارئ خلال 5 ثوانٍ</div>
-            
-            <div class="cd-timer-circle">
-                <span class="cd-number" id="timer-number">5</span>
-            </div>
-        </div>
-
-        <button class="cd-cancel-button" onclick="cancelEmergency()">إلغاء</button>
-        <p class="cd-bottom-info">سيتم إرسال موقعك الحالي الآن إلى جهات الطوارئ لضمان وصول المساعدة.</p>
-    </div>
-
-    <script>
-        let countdownTimer;
-        let countdownNumber = 5;
-
-        function startEmergencyCountDown() {
-            // إخفاء الواجهة الأولى وإظهار الواجهة الثانية (الحمراء)
-            document.getElementById('main-screen').style.display = 'none';
-            document.getElementById('count-down-screen').style.display = 'flex';
-            
-            // إعادة ضبط العداد
-            countdownNumber = 5;
-            document.getElementById('timer-number').innerText = countdownNumber;
-            
-            // بدء العداد التنازلي كل ثانية
-            countdownTimer = setInterval(() => {
-                countdownNumber--;
-                document.getElementById('timer-number').innerText = countdownNumber;
-                
-                if (countdownNumber <= 0) {
-                    clearInterval(countdownTimer);
-                    // عندما يصل العداد لصفر، نقوم بإرسال الموقع
-                    triggerLocationSend();
-                }
-            }, 1000);
-        }
-
-        function cancelEmergency() {
-            // إيقاف العداد
-            clearInterval(countdownTimer);
-            
-            // العودة للواجهة الأولى
-            document.getElementById('count-down-screen').style.display = 'none';
-            document.getElementById('main-screen').style.display = 'flex';
-        }
-
-        function triggerLocationSend() {
-            // وظيفة إرسال الموقع الجغرافي عبر الرسائل النصية
-            if (navigator.geolocation) {
-                alert("تم انتهاء الوقت! جاري تحديد موقعك الجغرافي الآن...");
-                navigator.geolocation.getCurrentPosition(showPositionAndSend, showError);
-            } else {
-                alert("عذراً، هاتفك لا يدعم تحديد الموقع GPS.");
-                // حتى لو لم يتم تحديد الموقع، نعود للشاشة الرئيسية
-                cancelEmergency();
-            }
-        }
-
-        function showPositionAndSend(position) {
-            let lat = position.coords.latitude;
-            let lon = position.coords.longitude;
-            let mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
-            
-            let message = `⚠️ طلب نجدة عاجل! أنا بحاجة للمساعدة. موقعي الحالي على الخريطة: ${mapLink}`;
-            
-            // فتح تطبيق الرسائل النصية مع الموقع جاهزاً للإرسال
-            window.location.href = `sms:?body=${encodeURIComponent(message)}`;
-            
-            // العودة للشاشة الرئيسية بعد فتح تطبيق الرسائل
-            setTimeout(() => {
-                cancelEmergency();
-            }, 1000);
-        }
-
-        function showError(error) {
-            alert("يرجى تفعيل الـ GPS والسماح للموقع للتمكن من إرسال مكانك بدقة.");
-            cancelEmergency();
-        }
-    </script>
-
-</body>
-</html>
+  @override
+  Widget build(BuildContext context) {
+    final color = isActive ? const Color(0xFFC8102E) : Colors.grey;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: color, size: 22),
+        const SizedBox(height: 4),
+        Text(label, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600)),
+      ],
+    );
+  }
+}
