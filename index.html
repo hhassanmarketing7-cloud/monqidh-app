@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منقذ - طلب النجدة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        .header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .header .user-name {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .sos-container {
+            margin-top: 50px;
+        }
+
+        .sos-button {
+            background: linear-gradient(145deg, #e60000, #cc0000);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            box-shadow: 0 10px 30px rgba(230, 0, 0, 0.5), inset 0 -5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .sos-button:active {
+            transform: scale(0.95);
+        }
+
+        .sos-button img {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+
+        .instruction {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-item {
+            color: #777;
+            text-decoration: none;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-item.active {
+            color: #e60000;
+        }
+
+        .nav-item img {
+            width: 24px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div></div> <!-- لعمل مسافة فارغة -->
+        <div>
+            <h3>أهلاً بك، حسان</h3>
+            <span class="user-name">نتمنى لك يوماً آمناً</span>
+        </div>
+        <div>🔔</div>
+    </div>
+
+    <div class="sos-container">
+        <!-- زر النجدة الرئيسي -->
+        <button class="sos-button" onclick="startEmergency()">
+            <div style="font-size: 40px; margin-bottom: 10px;">🚨</div>
+            طلب النجدة
+        </button>
+        <p class="instruction">اضغط عند الحاجة للمساعدة</p>
+    </div>
+
+    <!-- الشريط السفلي -->
+    <div class="bottom-nav">
+        <a href="#" class="nav-item">
+            <span style="font-size: 24px;">👤</span>
+            الملف الشخصي
+        </a>
+        <a href="#" class="nav-item">
+            <span style="font-size: 24px;">👥</span>
+            جهات الطوارئ
+        </a>
+        <a href="#" class="nav-item active">
+            <span style="font-size: 24px;">🏠</span>
+            الرئيسية
+        </a>
+        <a href="#" class="nav-item">
+            <span style="font-size: 24px;">⚙️</span>
+            الإعدادات
+        </a>
+        <a href="#" class="nav-item">
+            <span style="font-size: 24px;">📋</span>
+            السجل
+        </a>
+    </div>
+
+    <script>
+        function startEmergency() {
+            alert("⚠️ تم الضغط على زر النجدة! سيتم تفعيل العداد الآن...");
+            // هنا سنضيف لاحقاً كود الـ 5 ثواني وكود إرسال الموقع
+        }
+    </script>
+
+</body>
+</html>
