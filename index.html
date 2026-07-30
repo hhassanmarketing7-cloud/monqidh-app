@@ -3,167 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق منقذ - الطوارئ</title>
+    <title>موقعي الإلكتروني</title>
     <!-- استدعاء Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء خطوط Google Fonts (Cairo) -->
+    <!-- استدعاء خط Cairo للغة العربية -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <!-- FontAwesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #0f172a;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 400px;
-            height: 800px;
-            background-color: #ffffff;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border-radius: 40px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- حاوية الهاتف الرئيسية (تطابق الشاشة الرئيسية رقم 4 في الصورة) -->
-    <div class="app-container">
-        
-        <!-- شريط الحالة العلوي -->
-        <div class="flex justify-between items-center px-6 pt-4 text-gray-800 text-sm font-semibold">
-            <span>9:41</span>
-            <div class="flex items-center space-x-1 space-x-reverse text-xs">
-                <i class="fa-solid fa-signal"></i>
-                <i class="fa-solid fa-wifi"></i>
-                <i class="fa-solid fa-battery-full"></i>
+    <!-- شريط التنقل (Navbar) -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-black text-blue-600">
+                <i class="fa-solid fa-code ml-2"></i>منصتي
+            </div>
+            <nav class="hidden md:flex space-x-6 space-x-reverse font-semibold text-gray-600">
+                <a href="#hero" class="hover:text-blue-600 transition">الرئيسية</a>
+                <a href="#features" class="hover:text-blue-600 transition">المميزات</a>
+                <a href="#about" class="hover:text-blue-600 transition">من نحن</a>
+                <a href="#contact" class="hover:text-blue-600 transition">اتصل بنا</a>
+            </nav>
+            <div>
+                <a href="#contact" class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow hover:bg-blue-700 transition">ابدأ الان</a>
             </div>
         </div>
+    </header>
 
-        <!-- رأس الصفحة (الشعار والترحيب) -->
-        <div class="flex justify-between items-center px-6 pt-4">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-600 shadow-sm">
-                    <i class="fa-regular fa-bell text-lg"></i>
+    <!-- قسم الواجهة الرئيسية (Hero Section) -->
+    <section id="hero" class="py-20 bg-gradient-to-br from-blue-600 to-indigo-800 text-white text-center">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">اصنع حضورك الرقمي بكل احترافية</h1>
+            <p class="text-lg md:text-xl text-blue-100 mb-8">نساعدك في بناء مواقع ويب عصرية وسريعة تناسب تطلعاتك وتساعدك على تنمية عملك.</p>
+            <div class="flex justify-center space-x-4 space-x-reverse">
+                <a href="#contact" class="bg-white text-blue-600 font-bold px-8 py-3 rounded-full shadow-lg hover:bg-gray-100 transition">تواصل معنا</a>
+                <a href="#features" class="border border-white/40 text-white font-bold px-8 py-3 rounded-full hover:bg-white/10 transition">اعرف المزيد</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المميزات (Features) -->
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-black text-gray-900 mb-2">مميزات خدماتنا</h2>
+                <p class="text-gray-500">لماذا يختارنا العملاء دائماً؟</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- ميزة 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-6">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">سرعة فائقة</h3>
+                    <p class="text-gray-500 text-sm">أكواد محسنة بعناية لضمان تحميل صفحات الموقع بأسرع وقت ممكن.</p>
+                </div>
+                <!-- ميزة 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-6">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">تصميم متجاوب</h3>
+                    <p class="text-gray-500 text-sm">يتطابق الموقع بسلاسة مع جميع الشاشات (الهواتف، الأجهزة اللوحية، والحواسيب).</p>
+                </div>
+                <!-- ميزة 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-6">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">حماية عالية</h3>
+                    <p class="text-gray-500 text-sm">التزام بأحدث معايير الأمان وحماية البيانات لضمان راحة بالك.</p>
                 </div>
             </div>
-            <div class="text-left">
-                <h2 class="text-xs text-gray-500">أهلاً بك، حسان</h2>
-                <p class="text-[10px] text-gray-400">تمنى لك يوماً آمناً</p>
-            </div>
-            <div class="text-gray-700 text-lg">
-                <i class="fa-solid fa-bars"></i>
+        </div>
+    </section>
+
+    <!-- قسم اتصل بنا (Contact) -->
+    <section id="contact" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6 max-w-xl">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-200">
+                <h2 class="text-2xl font-black text-center mb-2">تواصل معنا</h2>
+                <p class="text-gray-500 text-center mb-8 text-sm">يسعدنا الإجابة عن استفساراتك وطلباتك</p>
+                <form onsubmit="event.preventDefault(); alert('تم إرسال رسالتك بنجاح!');" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">الاسم الكامل</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">البريد الإلكتروني</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">الرسالة</label>
+                        <textarea rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition shadow">إرسال الرسالة</button>
+                </form>
             </div>
         </div>
+    </section>
 
-        <!-- محتوى الشاشة الرئيسية (زر النجدة الكبير) -->
-        <div class="flex-1 flex flex-col items-center justify-center px-6 relative">
-            <!-- دوائر التموج الخلفية لزر النجدة -->
-            <div class="absolute w-72 h-72 rounded-full bg-red-50 animate-pulse"></div>
-            <div class="absolute w-60 h-60 rounded-full bg-red-100 opacity-80"></div>
-            
-            <!-- زر النجدة الرئيسي -->
-            <button onclick="openEmergencyScreen()" class="relative z-10 w-48 h-48 rounded-full bg-gradient-to-b from-red-500 to-red-700 text-white flex flex-col items-center justify-center shadow-2xl border-4 border-white transition transform active:scale-95">
-                <i class="fa-solid fa-bell text-4xl mb-2 animate-bounce"></i>
-                <span class="text-xl font-black tracking-wide">طلب النجدة</span>
-            </button>
-            
-            <p class="mt-8 text-xs text-gray-400 font-medium">اضغط عند الحاجة للمساعدة</p>
+    <!-- تذييل الصفحة (Footer) -->
+    <footer class="bg-gray-900 text-white py-8 text-center text-sm">
+        <div class="container mx-auto px-6">
+            <p class="text-gray-400">جميع حقوق النشر محفوظة &copy; 2026</p>
         </div>
+    </footer>
 
-        <!-- شريط التنقل السفلي -->
-        <div class="bg-white border-t border-gray-100 py-3 px-6 flex justify-around items-center text-center text-gray-400 text-xs">
-            <div class="flex flex-col items-center">
-                <i class="fa-solid fa-user-shield text-base mb-1"></i>
-                <span>جهات الطوارئ</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <i class="fa-solid fa-file-lines text-base mb-1"></i>
-                <span>السجل</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <i class="fa-solid fa-gear text-base mb-1"></i>
-                <span>الإعدادات</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <i class="fa-solid fa-user text-base mb-1"></i>
-                <span>الملف الشخصي</span>
-            </div>
-            <div class="flex flex-col items-center text-red-600">
-                <i class="fa-solid fa-house text-base mb-1"></i>
-                <span class="font-bold">الرئيسية</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- شاشة العد التنازلي لطلب النجدة (مخفية افتراضياً، تطابق الشاشة رقم 5) -->
-    <div id="emergencyModal" class="fixed inset-0 bg-red-700 z-50 hidden flex-col justify-between p-6 text-white max-w-[400px] h-[800px] m-auto rounded-[40px] shadow-2xl">
-        <!-- شريط علوي -->
-        <div class="flex justify-between items-center text-sm font-semibold">
-            <span>9:41</span>
-            <div class="flex items-center space-x-1 space-x-reverse text-xs">
-                <i class="fa-solid fa-signal"></i>
-                <i class="fa-solid fa-wifi"></i>
-                <i class="fa-solid fa-battery-full"></i>
-            </div>
-        </div>
-
-        <!-- محتوى شاشة الطوارئ -->
-        <div class="flex flex-col items-center justify-center text-center">
-            <h2 class="text-lg font-bold mb-2">طلب النجدة</h2>
-            <p class="text-xs text-red-100 mb-10">سيتم إرسال طلب النجدة خلال</p>
-            
-            <!-- عداد تنازلي كبير -->
-            <div id="countdownNumber" class="text-9xl font-black mb-12 tracking-tighter">5</div>
-
-            <!-- زر إلغاء -->
-            <button onclick="closeEmergencyScreen()" class="w-44 py-3 rounded-full border border-white/40 text-white font-bold text-sm tracking-wide bg-red-800/40 hover:bg-red-800 transition">
-                إلغاء
-            </button>
-        </div>
-
-        <!-- تذييل شاشة الطوارئ -->
-        <div class="text-center pb-4">
-            <p class="text-[11px] text-red-100">سيتم إرسال موقعك الحالي</p>
-            <p class="text-[11px] text-red-100">إلى جهات الطوارئ المحددة</p>
-        </div>
-    </div>
-
-    <!-- كود جافاسكريبت للتحكم بالعد التنازلي والشاشات -->
-    <script>
-        let countdownInterval;
-
-        function openEmergencyScreen() {
-            const modal = document.getElementById('emergencyModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            let timeLeft = 5;
-            document.getElementById('countdownNumber').innerText = timeLeft;
-
-            countdownInterval = setInterval(() => {
-                timeLeft--;
-                if (timeLeft >= 0) {
-                    document.getElementById('countdownNumber').innerText = timeLeft;
-                }
-                if (timeLeft < 0) {
-                    clearInterval(countdownInterval);
-                    alert("تم إرسال استغاثة الطوارئ بنجاح!");
-                    closeEmergencyScreen();
-                }
-            }, 1000);
-        }
-
-        function closeEmergencyScreen() {
-            clearInterval(countdownInterval);
-            const modal = document.getElementById('emergencyModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-    </script>
 </body>
 </html>
