@@ -1,286 +1,169 @@
-import 'package:flutter/material.dart';
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق منقذ - الطوارئ</title>
+    <!-- استدعاء Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استدعاء خطوط Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f172a;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            height: 800px;
+            background-color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-void main() {
-  runApp(const MyApp());
-}
+    <!-- حاوية الهاتف الرئيسية (تطابق الشاشة الرئيسية رقم 4 في الصورة) -->
+    <div class="app-container">
+        
+        <!-- شريط الحالة العلوي -->
+        <div class="flex justify-between items-center px-6 pt-4 text-gray-800 text-sm font-semibold">
+            <span>9:41</span>
+            <div class="flex items-center space-x-1 space-x-reverse text-xs">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+        <!-- رأس الصفحة (الشعار والترحيب) -->
+        <div class="flex justify-between items-center px-6 pt-4">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-600 shadow-sm">
+                    <i class="fa-regular fa-bell text-lg"></i>
+                </div>
+            </div>
+            <div class="text-left">
+                <h2 class="text-xs text-gray-500">أهلاً بك، حسان</h2>
+                <p class="text-[10px] text-gray-400">تمنى لك يوماً آمناً</p>
+            </div>
+            <div class="text-gray-700 text-lg">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'تطبيق منقذ',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: const LoginScreen(),
-    );
-  }
-}
+        <!-- محتوى الشاشة الرئيسية (زر النجدة الكبير) -->
+        <div class="flex-1 flex flex-col items-center justify-center px-6 relative">
+            <!-- دوائر التموج الخلفية لزر النجدة -->
+            <div class="absolute w-72 h-72 rounded-full bg-red-50 animate-pulse"></div>
+            <div class="absolute w-60 h-60 rounded-full bg-red-100 opacity-80"></div>
+            
+            <!-- زر النجدة الرئيسي -->
+            <button onclick="openEmergencyScreen()" class="relative z-10 w-48 h-48 rounded-full bg-gradient-to-b from-red-500 to-red-700 text-white flex flex-col items-center justify-center shadow-2xl border-4 border-white transition transform active:scale-95">
+                <i class="fa-solid fa-bell text-4xl mb-2 animate-bounce"></i>
+                <span class="text-xl font-black tracking-wide">طلب النجدة</span>
+            </button>
+            
+            <p class="mt-8 text-xs text-gray-400 font-medium">اضغط عند الحاجة للمساعدة</p>
+        </div>
 
-// 1. شاشة تسجيل الدخول
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+        <!-- شريط التنقل السفلي -->
+        <div class="bg-white border-t border-gray-100 py-3 px-6 flex justify-around items-center text-center text-gray-400 text-xs">
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-user-shield text-base mb-1"></i>
+                <span>جهات الطوارئ</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-file-lines text-base mb-1"></i>
+                <span>السجل</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-gear text-base mb-1"></i>
+                <span>الإعدادات</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-user text-base mb-1"></i>
+                <span>الملف الشخصي</span>
+            </div>
+            <div class="flex flex-col items-center text-red-600">
+                <i class="fa-solid fa-house text-base mb-1"></i>
+                <span class="font-bold">الرئيسية</span>
+            </div>
+        </div>
+    </div>
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
+    <!-- شاشة العد التنازلي لطلب النجدة (مخفية افتراضياً، تطابق الشاشة رقم 5) -->
+    <div id="emergencyModal" class="fixed inset-0 bg-red-700 z-50 hidden flex-col justify-between p-6 text-white max-w-[400px] h-[800px] m-auto rounded-[40px] shadow-2xl">
+        <!-- شريط علوي -->
+        <div class="flex justify-between items-center text-sm font-semibold">
+            <span>9:41</span>
+            <div class="flex items-center space-x-1 space-x-reverse text-xs">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _isLoading = false;
+        <!-- محتوى شاشة الطوارئ -->
+        <div class="flex flex-col items-center justify-center text-center">
+            <h2 class="text-lg font-bold mb-2">طلب النجدة</h2>
+            <p class="text-xs text-red-100 mb-10">سيتم إرسال طلب النجدة خلال</p>
+            
+            <!-- عداد تنازلي كبير -->
+            <div id="countdownNumber" class="text-9xl font-black mb-12 tracking-tighter">5</div>
 
-  void _loginUser() {
-    setState(() {
-      _isLoading = true;
-    });
+            <!-- زر إلغاء -->
+            <button onclick="closeEmergencyScreen()" class="w-44 py-3 rounded-full border border-white/40 text-white font-bold text-sm tracking-wide bg-red-800/40 hover:bg-red-800 transition">
+                إلغاء
+            </button>
+        </div>
 
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
+        <!-- تذييل شاشة الطوارئ -->
+        <div class="text-center pb-4">
+            <p class="text-[11px] text-red-100">سيتم إرسال موقعك الحالي</p>
+            <p class="text-[11px] text-red-100">إلى جهات الطوارئ المحددة</p>
+        </div>
+    </div>
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const EmergencyScreen()),
-      );
-    });
-  }
+    <!-- كود جافاسكريبت للتحكم بالعد التنازلي والشاشات -->
+    <script>
+        let countdownInterval;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('تسجيل الدخول - منقذ'),
-        centerTitle: true,
-        backgroundColor: Colors.red[700],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'مرحباً بك في تطبيق منقذ',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red),
-            ),
-            const SizedBox(height: 30),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'البريد الإلكتروني',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email),
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'كلمة المرور',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock),
-              ),
-            ),
-            const SizedBox(height: 25),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: _isLoading ? null : _loginUser,
-                child: _isLoading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'دخول',
-                        style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                );
-              },
-              child: const Text('ليس لديك حساب؟ انقر هنا لإنشاء حساب جديد'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+        function openEmergencyScreen() {
+            const modal = document.getElementById('emergencyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            let timeLeft = 5;
+            document.getElementById('countdownNumber').innerText = timeLeft;
 
-// 2. شاشة إنشاء حساب جديد
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft >= 0) {
+                    document.getElementById('countdownNumber').innerText = timeLeft;
+                }
+                if (timeLeft < 0) {
+                    clearInterval(countdownInterval);
+                    alert("تم إرسال استغاثة الطوارئ بنجاح!");
+                    closeEmergencyScreen();
+                }
+            }, 1000);
+        }
 
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _isLoading = false;
-
-  void _registerUser() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('تم إنشاء الحساب بنجاح، يمكنك تسجيل الدخول الآن!')),
-      );
-      Navigator.pop(context);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('إنشاء حساب جديد - منقذ'),
-        centerTitle: true,
-        backgroundColor: Colors.red[700],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'انضم إلى تطبيق منقذ',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red),
-            ),
-            const SizedBox(height: 30),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'البريد الإلكتروني الجديد',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email),
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'كلمة المرور',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock),
-              ),
-            ),
-            const SizedBox(height: 25),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: _isLoading ? null : _registerUser,
-                child: _isLoading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'تسجيل الحساب',
-                        style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// 3. شاشة لوحة الطوارئ الرئيسية + إرسال الموقع الجغرافي GPS
-class EmergencyScreen extends StatefulWidget {
-  const EmergencyScreen({super.key});
-
-  @override
-  State<EmergencyScreen> createState() => _EmergencyScreenState();
-}
-
-class _EmergencyScreenState extends State<EmergencyScreen> {
-  bool _isSendingSos = false;
-
-  void _sendEmergencyAlert() {
-    setState(() {
-      _isSendingSos = true;
-    });
-
-    // محاكاة جلب إحداثيات الـ GPS وإرسالها للطوارئ
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isSendingSos = false;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('🚨 تم جلب إحداثيات الموقع (GPS) وإرسال الاستغاثة بنجاح!'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 4),
-        ),
-      );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('لوحة الطوارئ - منقذ 🚨'),
-        centerTitle: true,
-        backgroundColor: Colors.red[800],
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'اضغط على زر الاستغاثة أدناه لإرسال موقعك الحالي (GPS) وفريق الإنقاذ فوراَ',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 50),
-              SizedBox(
-                width: 180,
-                height: 180,
-                child: ElevatedButton(
-                  onPressed: _isSendingSos ? null : _sendEmergencyAlert,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    shape: const CircleBorder(),
-                    elevation: 10,
-                  ),
-                  child: _isSendingSos
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text(
-                          'SOS',
-                          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+        function closeEmergencyScreen() {
+            clearInterval(countdownInterval);
+            const modal = document.getElementById('emergencyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
+</body>
+</html>
