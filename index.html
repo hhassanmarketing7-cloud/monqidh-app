@@ -1,9 +1,7 @@
 from flask import Flask, render_template_string, request
-import time
 
 app = Flask(__name__)
 
-# قالب HTML البسيط لصفحة الويب
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -12,11 +10,11 @@ HTML_TEMPLATE = """
     <title>منصة الأمن السيبراني الآلية</title>
     <style>
         body { font-family: Tahoma, sans-serif; background-color: #0f172a; color: #f8fafc; text-align: center; padding: 50px; }
-        .container { background: #1e293b; padding: 30px; border-radius: 10px; display: inline-block; width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .container { background: #1e293b; padding: 30px; border-radius: 10px; display: inline-block; width: 450px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         input[type="text"] { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #475569; background: #0f172a; color: #fff; border-radius: 5px; }
         button { background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         button:hover { background: #1d4ed8; }
-        .results { margin-top: 20px; text-align: right; background: #0f172a; padding: 15px; border-radius: 5px; border-right: 4px solid #22c55e; }
+        .results { margin-top: 20px; text-align: right; background: #0f172a; padding: 15px; border-radius: 5px; border-right: 4px solid #22c55e; word-break: break-all; }
     </style>
 </head>
 <body>
@@ -30,10 +28,9 @@ HTML_TEMPLATE = """
         
         {% if results %}
         <div class="results">
-            <h3>النتائج المسحوبة:</h3>
-            <p><strong>الهدف:</strong> {{ results.target }}</p>
-            <p><strong>حالة الحماية:</strong> {{ results.tracking }}</p>
-            <p><strong>البيانات:</strong> {{ results.data }}</p>
+            <h3>حالة التنفيذ:</h3>
+            <p><strong>الشركة المستهدفة:</strong> {{ results.target }}</p>
+            <p><strong>الحالة:</strong> {{ results.status }}</p>
         </div>
         {% endif %}
     </div>
@@ -45,18 +42,17 @@ HTML_TEMPLATE = """
 def home():
     results = None
     if request.method == "POST":
+        # استقبال اسم الشركة المدخل من الموقع
         company_name = request.form.get("company")
         
-        # محاكاة العمليات الآلية بالكامل خلف الكواليس
-        time.sleep(1) # الاستطلاع
-        time.sleep(1) # فحص الثغرات
-        time.sleep(1) # سحب البيانات والحماية ضد التتبع
-        
-        results = {
-            "target": company_name,
-            "tracking": "تم إخفاء الهوية وتوجيه الاتصال بنجاح (Anti-Tracking Active)",
-            "data": "تم سحب عينة من بيانات قواعد البيانات وسجلات المستخدمين بنجاح."
-        }
+        # التأكد من وصول الاسم ومعالجته برمجياً
+        if company_name:
+            print(f"[!] تم استلام الهدف بنجاح: {company_name}")
+            
+            results = {
+                "target": company_name,
+                "status": "تم استقبال الهدف بنجاح وجاري تمريره لوحدات الفحص والتحليل في الخلفية."
+            }
         
     return render_template_string(HTML_TEMPLATE, results=results)
 
