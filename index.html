@@ -3,177 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أحمد المطور — Portfolio</title>
+    <title>مساعدي الذكي الخاص</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            font-family: Tahoma, sans-serif;
         }
-
-        :root {
-            --primary: #1a1a1a;
-            --secondary: #666;
-            --light: #f5f5f5;
-            --border: #e5e5e5;
-            --accent: #2563eb;
-            --accent-light: #dbeafe;
-            --danger: #dc2626;
-            --success: #16a34a;
-            --radius: 12px;
-            --shadow: 0 4px 20px rgba(0,0,0,0.06);
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans Arabic', sans-serif;
-            color: var(--primary);
-            background: #fff;
-            line-height: 1.6;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-
-        /* Hero */
-        .hero {
-            padding: 80px 24px 48px;
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            height: 90vh;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        header {
+            background-color: #21262d;
+            padding: 15px;
             text-align: center;
-            background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+            border-bottom: 1px solid #30363d;
         }
-
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: #fff;
+        header h2 {
+            font-size: 1.2rem;
+            color: #58a6ff;
+            margin-bottom: 5px;
+        }
+        header p {
+            font-size: 0.85rem;
+            color: #8b949e;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            font-weight: 600;
-            margin: 0 auto 24px;
-            box-shadow: var(--shadow);
-        }
-
-        .hero h1 {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .hero p {
-            font-size: 17px;
-            color: var(--secondary);
-            margin-bottom: 28px;
-        }
-
-        .badges {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            padding: 8px 18px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            font-size: 14px;
-            color: var(--secondary);
-            background: #fff;
-            transition: all 0.2s;
-        }
-
-        .badge:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* Sections */
-        .section {
-            padding: 48px 24px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--primary);
-            display: inline-block;
-        }
-
-        /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .project-card {
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fff;
-        }
-
-        .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-            border-color: var(--primary);
-        }
-
-        .project-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            font-size: 20px;
-        }
-
-        .project-card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .project-card p {
-            font-size: 14px;
-            color: var(--secondary);
-            line-height: 1.6;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-
-        .project-tag {
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 6px;
-            background: var(--light);
-            color: var(--secondary);
-        }
-
-        /* Skills */
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 10px;
         }
-
-        .skill-chip {
-            padding: 10px 20px;
+        .message {
+            padding: 10px 14px;
             border-radius: 8px;
-            border: 1px solid var(--border);
-            font-size: 15px;
-            transition: all 0.2s;
-           
+            max-width: 80%;
+            word-wrap: break-word;
+            font-size: 0.95rem;
+        }
+        .ai-message {
+            background-color: #21262d;
+            color: #c9d1d9;
+            align-self: flex-start;
+            border: 1px solid #30363d;
+        }
+        .user-message {
+            background-color: #1f6feb;
+            color: #ffffff;
+            align-self: flex-end;
+        }
+        .input-area {
+            display: flex;
+            padding: 12px;
+            background-color: #21262d;
+            border-top: 1px solid #30363d;
+        }
+        input {
+            flex: 1;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 10px;
+            color: #c9d1d9;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        input:focus {
+            border-color: #58a6ff;
+        }
+        button {
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0 20px;
+            margin-right: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #2ea043;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <header>
+            <h2>مساعد الذكاء الاصطناعي الخاص بي</h2>
+            <p>أنا أعمل حصرياً وفقاً لتعليماتك وطلباتك.</p>
+        </header>
+        
+        <div id="chat-box" class="chat-box">
+            <div class="message ai-message">
+                مرحباً بك! أنا جاهز لتلقي أوامرك وتنفيذها بدقة.
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="اكتب طلبك هنا..." autocomplete="off">
+            <button id="send-btn">إرسال</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            if (sender === 'user') {
+                messageDiv.classList.add('user-message');
+            } else {
+                messageDiv.classList.add('ai-message');
+            }
+            messageDiv.textContent = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleUserSubmit() {
+            const text = userInput.value.trim();
+            if (text === '') return;
+
+            addMessage(text, 'user');
+            userInput.value = '';
+
+            setTimeout(() => {
+                addMessage("تم تلقي أمرك وتنفيذه بدقة: " + text, 'ai');
+            }, 1000);
+        }
+
+        sendBtn.addEventListener('click', handleUserSubmit);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleUserSubmit();
+            }
+        });
+    </script>
+</body>
+</html>
