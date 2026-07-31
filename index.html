@@ -1,38 +1,64 @@
+from flask import Flask, render_template_string, request
 import time
 
-class ZeroEffortAgent:
-    def __init__(self, company_name):
-        self.company = company_name
+app = Flask(__name__)
 
-    def run(self):
-        print(f"[*] تم استلام اسم الشركة: {self.company}")
-        print("[*] جاري بدء المحرك الآلي بالكامل...")
+# قالب HTML البسيط لصفحة الويب
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>منصة الأمن السيبراني الآلية</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #0f172a; color: #f8fafc; text-align: center; padding: 50px; }
+        .container { background: #1e293b; padding: 30px; border-radius: 10px; display: inline-block; width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        input[type="text"] { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #475569; background: #0f172a; color: #fff; border-radius: 5px; }
+        button { background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #1d4ed8; }
+        .results { margin-top: 20px; text-align: right; background: #0f172a; padding: 15px; border-radius: 5px; border-right: 4px solid #22c55e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>نظام الفحص والاختراق الآلي</h2>
+        <form method="POST">
+            <input type="text" name="company" placeholder="أدخل اسم الشركة أو النطاق (مثال: target.com)" required>
+            <br>
+            <button type="submit">بدء العملية الآلية</button>
+        </form>
         
-        # 1. الاستطلاع التلقائي
-        time.sleep(1)
-        print("[+] المرحلة 1: تم جمع النطاقات والمنافذ المفتوحة بنجاح.")
+        {% if results %}
+        <div class="results">
+            <h3>النتائج المسحوبة:</h3>
+            <p><strong>الهدف:</strong> {{ results.target }}</p>
+            <p><strong>حالة الحماية:</strong> {{ results.tracking }}</p>
+            <p><strong>البيانات:</strong> {{ results.data }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+"""
+
+@app.route("/", methods=["GET", "POST"])
+def home():
+    results = None
+    if request.method == "POST":
+        company_name = request.form.get("company")
         
-        # 2. فحص الثغرات
-        time.sleep(1)
-        print("[+] المرحلة 2: تم رصد ثغرة برمجية متاحة للاستغلال.")
+        # محاكاة العمليات الآلية بالكامل خلف الكواليس
+        time.sleep(1) # الاستطلاع
+        time.sleep(1) # فحص الثغرات
+        time.sleep(1) # سحب البيانات والحماية ضد التتبع
         
-        # 3. الاستغلال وسحب البيانات
-        time.sleep(1)
-        print("[+] المرحلة 3: جاري سحب عينة من البيانات وحفظها بشكل مشفر...")
-        
-        # النتائج النهائية
         results = {
-            "الهدف": self.company,
-            "حالة التتبع": "مخفي تماماً عبر بروتوكولات الأمان",
-            "البيانات المسحوبة": "تم سحب جداول الحسابات بنجاح"
+            "target": company_name,
+            "tracking": "تم إخفاء الهوية وتوجيه الاتصال بنجاح (Anti-Tracking Active)",
+            "data": "تم سحب عينة من بيانات قواعد البيانات وسجلات المستخدمين بنجاح."
         }
         
-        print("\n=== النتائج النهائية للشركة ===")
-        for key, val in results.items():
-            print(f"- {key}: {val}")
+    return render_template_string(HTML_TEMPLATE, results=results)
 
-# نقطة التشغيل: تعطيه اسم الشركة فقط ولا تفعل أي شيء آخر
 if __name__ == "__main__":
-    target_company = "example-target.com"  # هنا تضع اسم الشركة فقط
-    agent = ZeroEffortAgent(target_company)
-    agent.run()
+    app.run(host="0.0.0.0", port=5000, debug=True)
