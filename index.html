@@ -1,3 +1,96 @@
-الآن دعني أنشئ ملف PRD.md للمشروع:
-Action: create_file({"file_text":"# منصة خدمات الفنيين والحرفيين - مستند متطلبات المنتج (PRD)\n\n## نظرة عامة\nمنصة خدمية رقمية عربية شاملة تربط أصحاب الحرف والفنيين المستقلين بالعملاء الباحثين عن خدمات منزلية ومهنية.\n\n## الإصدار الحالي: MVP v1.0\n\n### الميزات المنجزة ✅\n\n#### 1. البنية التحتية\n- ✅ Backend API بـ FastAPI\n- ✅ قاعدة بيانات MongoDB\n- ✅ نظام مصادقة JWT\n- ✅ تطبيق موبايل بـ React Native + Expo\n\n#### 2. للعملاء (بدون تسجيل)\n- ✅ الصفحة الرئيسية بتصميم عصري (أزرق وأخضر)\n- ✅ فلترة جغرافية ذكية (دولة + محافظة)\n- ✅ عرض بطاقات الفنيين مع:\n  - الاسم والتخصص\n  - الموقع الجغرافي\n  - التقييم بالنجوم\n  - عدد التقييمات\n- ✅ زر اتصال مباشر بالفني\n- ✅ عداد عدد الفنيين المتاحين\n- ✅ صفحة تفاصيل الفني\n- ✅ نظام التقييمات (إضافة تقييم + عرض التقييمات)\n- ✅ Pull-to-refresh\n\n#### 3. للفنيين\n- ✅ صفحة تسجيل جديد مع:\n  - الاسم الكامل\n  - رقم الهاتف\n  - كلمة المرور\n  - التخصص المهني\n  - الموقع (دولة + محافظة)\n  - وصف مختصر\n- ✅ صفحة تسجيل الدخول\n- ✅ الملف الشخصي للفني مع:\n  - عرض البيانات\n  - عرض التقييمات المستلمة\n  - حالة الموافقة\n  - حالة الاشتراك\n\n#### 4. البيانات التجريبية\n- ✅ 5 دول عربية (مصر، السعودية، الإمارات، الأردن، الكويت)\n- ✅ محافظات/مدن لكل دولة\n- ✅ 5 فنيين تجريبيين (4 معتمدين + 1 معلق)\n- ✅ تقييمات تجريبية\n- ✅ حساب أدمن افتراضي\n\n#### 5. الإدارة\n- ✅ API endpoints للمدراء:\n  - إحصائيات المنصة\n  - عرض الطلبات المعلقة\n  - الموافقة/الرفض على الفنيين\n  - حذف الفنيين\n\n### الميزات قيد التطوير 🚧\n\n#### 1. لوحة تحكم الإدارة (Admin Panel)\n- ⏳ واجهة ويب للمدراء\n- ⏳ لوحة القيادة بالإحصائيات\n- ⏳ إدارة الطلبات المعلقة\n- ⏳ إدارة الفنيين\n- ⏳ إدارة المواقع الجغرافية\n\n#### 2. نظام الاشتراكات\n- ⏳ تكامل Stripe\n- ⏳ خطط الاشتراك (شهري/سنوي)\n- ⏳ صفحة الدفع\n- ⏳ تتبع حالة الاشتراك\n- ⏳ تفعيل/تعطيل الفنيين حسب الاشتراك\n\n#### 3. تحسينات للفنيين\n- ⏳ تعديل الملف الشخصي\n- ⏳ رفع الصورة الشخصية\n- ⏳ إشعارات الموافقة/الرفض\n- ⏳ إشعارات التقييمات الجديدة\n\n#### 4. ميزات إضافية\n- ⏳ نظام الإشعارات (Firebase)\n- ⏳ البحث عن الفنيين بالاسم\n- ⏳ تصفية حسب التخصص\n- ⏳ معرض أعمال للفنيين\n\n### التقنيات المستخدمة\n\n**Frontend:**\n- React Native 0.81.5\n- Expo SDK 54\n- TypeScript\n- Expo Router (file-based routing)\n- React Native AsyncStorage (التخزين المحلي)\n- Expo Linear Gradient\n- Expo Vector Icons\n\n**Backend:**\n- Python 3.10+\n- FastAPI 0.110.1\n- MongoDB + Motor (async driver)\n- JWT Authentication\n- Bcrypt (password hashing)\n- Python-dotenv\n\n**Database:**\n- MongoDB 4.6.3\n- Collections: users, locations, ratings\n\n### بنية المشروع\n\n```\n/app\n├── backend/\n│   ├── server.py          # FastAPI application\n│   ├── .env              # Environment variables\n│   └── requirements.txt  # Python dependencies\n├── frontend/\n│   ├── app/              # Expo Router pages\n│   │   ├── index.tsx     # الصفحة الرئيسية\n│   │   ├── register.tsx  # تسجيل فني جديد\n│   │   ├── login.tsx     # تسجيل الدخول\n│   │   ├── profile.tsx   # الملف الشخصي\n│   │   └── provider/\n│   │       └── [id].tsx  # تفاصيل الفني\n│   ├── src/\n│   │   └── utils/\n│   │       └── storage/  # Local storage utils\n│   ├── package.json\n│   └── .env\n└── memory/\n    └── test_credentials.md  # بيانات الاختبار\n```\n\n### API Endpoints\n\n#### العامة\n- `GET /api/` - رسالة ترحيب\n- `GET /api/locations/countries` - قائمة الدول\n- `GET /api/locations/governorates/{country}` - المحافظات حسب الدولة\n\n#### المصادقة\n- `POST /api/auth/register` - تسجيل فني جديد\n- `POST /api/auth/login` - تسجيل دخول الفني\n- `POST /api/auth/admin/login` - تسجيل دخول المدير\n\n#### الفنيون\n- `GET /api/providers` - قائمة الفنيين (مع فلاتر)\n- `GET /api/providers/{id}` - تفاصيل فني محدد\n- `GET /api/providers/me/profile` - الملف الشخصي للفني المسجل\n- `PUT /api/providers/me/profile` - تحديث الملف الشخصي\n\n#### التقييمات\n- `POST /api/ratings` - إضافة تقييم\n- `GET /api/ratings/{provider_id}` - تقييمات فني محدد\n\n#### الإدارة (تتطلب توثيق أدمن)\n- `GET /api/admin/stats` - إحصائيات المنصة\n- `GET /api/admin/providers/pending` - الطلبات المعلقة\n- `POST /api/admin/providers/{id}/approve` - الموافقة على فني\n- `POST /api/admin/providers/{id}/reject` - رفض فني\n- `DELETE /api/admin/providers/{id}` - حذف فني\n\n### بيانات الاختبار\n\nراجع ملف `/app/memory/test_credentials.md` للحصول على:\n- بيانات دخول المدير\n- حسابات الفنيين التجريبية\n- أرقام الهواتف وكلمات المرور\n\n### الإعدادات البيئية\n\n**Backend (.env):**\n```\nMONGO_URL=mongodb://localhost:27017\nDB_NAME=test_database\nSECRET_KEY=your-secret-key-change-in-production\n```\n\n**Frontend (.env):**\n```\nEXPO_PUBLIC_BACKEND_URL=https://skilled-workers-38.preview.emergentagent.com\n```\n\n### المهام التالية (Next Steps)\n\n#### أولوية عالية 🔴\n1. لوحة تحكم الإدارة (Admin Panel)\n2. نظام الاشتراكات والدفع (Stripe)\n3. تعديل الملف الشخصي للفنيين\n4. رفع الصور الشخصية\n\n#### أولوية متوسطة 🟡\n5. نظام الإشعارات (Firebase)\n6. البحث والفلترة المتقدمة\n7. معرض أعمال الفنيين\n8. تحسينات UX/UI\n\n#### أولوية منخفضة 🟢\n9. نظام الحجز المسبق\n10. محادثة داخلية\n11. دعم متعدد اللغات\n12. تطبيق ويب\n\n### ملاحظات تقنية\n\n1. **التوجيه (Routing)**: يستخدم Expo Router مع file-based routing\n2. **التخزين المحلي**: يستخدم AsyncStorage عبر wrapper مخصص\n3. **المصادقة**: JWT tokens مخزنة في SecureStore\n4. **التصميم**: Material Design مع ألوان أزرق (#2196F3) وأخضر (#4CAF50)\n5. **الاتصال**: رابط مباشر عبر `tel:` protocol\n6. **التقييمات**: مفتوحة للجميع بدون تسجيل دخول\n\n### متطلبات التطوير المستقبلية\n\n- [ ] Unit tests للـ API\n- [ ] E2E tests للتطبيق\n- [ ] CI/CD pipeline\n- [ ] Documentation (Swagger)\n- [ ] Performance monitoring\n- [ ] Error tracking (Sentry)\n- [ ] Analytics integration\n\n---\n\n**آخر تحديث:** 3 أغسطس 2026\n**الإصدار:** MVP v1.0\n**الحالة:** قيد التطوير النشط\n","path":"/app/memory/PRD.md"})
-Observation: Create successful: /app/memory/PRD.md
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة خدمات الفنيين والحرفيين - PRD</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        h1 {
+            color: #2196F3;
+            text-align: center;
+            border-bottom: 3px solid #2196F3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-top: 30px;
+            border-right: 4px solid #4CAF50;
+            padding-right: 10px;
+        }
+        ul {
+            padding-right: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .status-box {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9em;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>منصة خدمات الفنيين والحرفيين</h1>
+        <p><strong>مستند متطلبات المنتج (PRD) - الإصدار الحالي:</strong> MVP v1.0</p>
+
+        <h2>نظرة عامة</h2>
+        <p>منصة خدمية رقمية عربية شاملة تربط أصحاب الحرف والفنيين المستقلين بالعملاء الباحثين عن خدمات منزلية ومهنية.</p>
+
+        <h2>الميزات المنجزة ✅</h2>
+        <ul>
+            <li><strong>البنية التحتية:</strong> Backend API بـ FastAPI، قاعدة بيانات MongoDB، ونظام مصادقة JWT.</li>
+            <li><strong>للعملاء:</strong> تصميم عصري، فلترة جغرافية ذكية، بطاقات الفنيين، وزر اتصال مباشر.</li>
+            <li><strong>للفنيين:</strong> صفحات تسجيل جديد، تسجيل دخول، وملف شخصي متكامل.</li>
+            <li><strong>البيانات التجريبية:</strong> دعم 5 دول عربية، محافظات متعددة، وفنيين تجريبيين.</li>
+            <li><strong>الإدارة:</strong> واجهات برمجة التطبيقات (API endpoints) لإدارة ومتابعة الفنيين.</li>
+        </ul>
+
+        <h2>الميزات قيد التطوير 🚧</h2>
+        <ul>
+            <li>واجهة ويب لوحة تحكم الإدارة (Admin Panel).</li>
+            <li>نظام الاشتراكات والدفع الإلكتروني عبر Stripe.</li>
+            <li>تطوير تعديل الملف الشخصي للفنيين ورفع الصور.</li>
+            <li>نظام الإشعارات والبحث المتقدم.</li>
+        </ul>
+
+        <div class="status-box">
+            <strong>حالة المشروع:</strong> قيد التطوير النشط لتطبيقات الموبايل والويب.
+        </div>
+
+        <div class="footer">
+            آخر تحديث: 3 أغسطس 2026
+        </div>
+    </div>
+
+</body>
+</html>
