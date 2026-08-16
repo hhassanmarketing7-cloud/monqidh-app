@@ -1,96 +1,539 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة خدمات الفنيين والحرفيين - PRD</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        h1 {
-            color: #2196F3;
-            text-align: center;
-            border-bottom: 3px solid #2196F3;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #4CAF50;
-            margin-top: 30px;
-            border-right: 4px solid #4CAF50;
-            padding-right: 10px;
-        }
-        ul {
-            padding-right: 20px;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .status-box {
-            background: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #777;
-            font-size: 0.9em;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberScan | فحص أمني</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: #07111f;
+      color: #e5edf7;
+      min-height: 100vh;
+    }
+
+    .app {
+      width: min(100%, 1050px);
+      margin: auto;
+      padding: 25px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+      padding: 18px 22px;
+      background: #0d1b2d;
+      border: 1px solid #19304a;
+      border-radius: 18px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      background: #102942;
+      border-radius: 14px;
+      font-size: 25px;
+    }
+
+    .logo h1 {
+      font-size: 21px;
+      color: #fff;
+    }
+
+    .logo span {
+      display: block;
+      color: #7f93aa;
+      font-size: 12px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #6ee7b7;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 12px #34d399;
+    }
+
+    .hero {
+      text-align: center;
+      margin: 45px 0;
+    }
+
+    .hero .shield {
+      font-size: 58px;
+      margin-bottom: 15px;
+    }
+
+    .hero h2 {
+      font-size: clamp(28px, 5vw, 45px);
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #8da0b7;
+      max-width: 650px;
+      margin: auto;
+      line-height: 1.9;
+    }
+
+    .scanner {
+      background: #0c1929;
+      border: 1px solid #1a334e;
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .scanner-title {
+      margin-bottom: 18px;
+    }
+
+    .scanner-title h3 {
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .scanner-title p {
+      color: #71859d;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      background: #071321;
+      border: 1px solid #24405d;
+      color: white;
+      padding: 16px;
+      border-radius: 13px;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56,189,248,.08);
+    }
+
+    button {
+      border: 0;
+      border-radius: 13px;
+      padding: 0 25px;
+      background: #2563eb;
+      color: white;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: #1d4ed8;
+    }
+
+    .warning {
+      margin-top: 15px;
+      padding: 12px 15px;
+      border-radius: 11px;
+      background: #211b0d;
+      border: 1px solid #4b3b15;
+      color: #d8bd71;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .progress-box {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      font-size: 13px;
+      color: #9eb0c4;
+    }
+
+    .progress {
+      height: 9px;
+      background: #071321;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: #38bdf8;
+      transition: width .4s;
+    }
+
+    .results {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .result-header h3 {
+      color: white;
+    }
+
+    .target {
+      color: #647b94;
+      font-size: 12px;
+      direction: ltr;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      padding: 18px;
+      border-radius: 15px;
+      background: #0d1c2e;
+      border: 1px solid #1b344e;
+    }
+
+    .card strong {
+      display: block;
+      font-size: 25px;
+      margin-bottom: 4px;
+    }
+
+    .card span {
+      color: #8295aa;
+      font-size: 12px;
+    }
+
+    .safe strong {
+      color: #34d399;
+    }
+
+    .medium strong {
+      color: #fbbf24;
+    }
+
+    .high strong {
+      color: #fb7185;
+    }
+
+    .finding {
+      padding: 18px;
+      background: #0d1c2e;
+      border: 1px solid #1b344e;
+      border-radius: 15px;
+      margin-bottom: 10px;
+    }
+
+    .finding-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 7px;
+    }
+
+    .finding h4 {
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .badge {
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .badge.medium {
+      color: #fbbf24;
+      background: rgba(251,191,36,.1);
+    }
+
+    .badge.low {
+      color: #60a5fa;
+      background: rgba(96,165,250,.1);
+    }
+
+    .finding p {
+      color: #8295aa;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    footer {
+      text-align: center;
+      color: #536a83;
+      font-size: 11px;
+      margin: 30px 0 10px;
+    }
+
+    @media (max-width: 650px) {
+      .app {
+        padding: 14px;
+      }
+
+      header {
+        padding: 14px;
+      }
+
+      .input-row {
+        flex-direction: column;
+      }
+
+      button {
+        height: 52px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .status {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>منصة خدمات الفنيين والحرفيين</h1>
-        <p><strong>مستند متطلبات المنتج (PRD) - الإصدار الحالي:</strong> MVP v1.0</p>
+<div class="app">
 
-        <h2>نظرة عامة</h2>
-        <p>منصة خدمية رقمية عربية شاملة تربط أصحاب الحرف والفنيين المستقلين بالعملاء الباحثين عن خدمات منزلية ومهنية.</p>
-
-        <h2>الميزات المنجزة ✅</h2>
-        <ul>
-            <li><strong>البنية التحتية:</strong> Backend API بـ FastAPI، قاعدة بيانات MongoDB، ونظام مصادقة JWT.</li>
-            <li><strong>للعملاء:</strong> تصميم عصري، فلترة جغرافية ذكية، بطاقات الفنيين، وزر اتصال مباشر.</li>
-            <li><strong>للفنيين:</strong> صفحات تسجيل جديد، تسجيل دخول، وملف شخصي متكامل.</li>
-            <li><strong>البيانات التجريبية:</strong> دعم 5 دول عربية، محافظات متعددة، وفنيين تجريبيين.</li>
-            <li><strong>الإدارة:</strong> واجهات برمجة التطبيقات (API endpoints) لإدارة ومتابعة الفنيين.</li>
-        </ul>
-
-        <h2>الميزات قيد التطوير 🚧</h2>
-        <ul>
-            <li>واجهة ويب لوحة تحكم الإدارة (Admin Panel).</li>
-            <li>نظام الاشتراكات والدفع الإلكتروني عبر Stripe.</li>
-            <li>تطوير تعديل الملف الشخصي للفنيين ورفع الصور.</li>
-            <li>نظام الإشعارات والبحث المتقدم.</li>
-        </ul>
-
-        <div class="status-box">
-            <strong>حالة المشروع:</strong> قيد التطوير النشط لتطبيقات الموبايل والويب.
-        </div>
-
-        <div class="footer">
-            آخر تحديث: 3 أغسطس 2026
-        </div>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🛡️</div>
+      <div>
+        <h1>CyberScan</h1>
+        <span>منصة الفحص الأمني</span>
+      </div>
     </div>
+
+    <div class="status">
+      <span class="dot"></span>
+      النظام جاهز
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="shield">🛡️</div>
+    <h2>اكتشف نقاط الضعف قبل المهاجمين</h2>
+    <p>
+      منصة عربية لمساعدة المختصين على تقييم الوضع الأمني
+      للأصول والأنظمة التي يملكونها أو لديهم تصريح باختبارها.
+    </p>
+  </section>
+
+  <section class="scanner">
+
+    <div class="scanner-title">
+      <h3>بدء فحص أمني</h3>
+      <p>أدخل نطاقًا أو عنوان IP مصرحًا لك باختباره.</p>
+    </div>
+
+    <div class="input-row">
+      <input
+        id="target"
+        type="text"
+        placeholder="example.com أو 192.168.1.10"
+      >
+
+      <button onclick="startScan()">
+        🔍 بدء الفحص
+      </button>
+    </div>
+
+    <div class="warning">
+      ⚠️ استخدم هذه المنصة فقط على الأنظمة التي تملكها أو لديك تصريح
+      رسمي لاختبارها.
+    </div>
+
+    <div class="progress-box" id="progressBox">
+
+      <div class="progress-info">
+        <span id="progressText">جاري تجهيز الفحص...</span>
+        <span id="progressPercent">0%</span>
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+    </div>
+
+    <div class="results" id="results">
+
+      <div class="result-header">
+        <h3>نتائج الفحص</h3>
+        <span class="target" id="targetResult"></span>
+      </div>
+
+      <div class="cards">
+
+        <div class="card safe">
+          <strong>12</strong>
+          <span>فحوصات آمنة</span>
+        </div>
+
+        <div class="card medium">
+          <strong>2</strong>
+          <span>ملاحظات متوسطة</span>
+        </div>
+
+        <div class="card high">
+          <strong>0</strong>
+          <span>ثغرات حرجة</span>
+        </div>
+
+      </div>
+
+      <div class="finding">
+        <div class="finding-top">
+          <h4>إعدادات أمان HTTP</h4>
+          <span class="badge medium">متوسطة</span>
+        </div>
+
+        <p>
+          يُنصح بمراجعة ترويسات الأمان HTTP وتفعيل الإعدادات المناسبة
+          لحماية التطبيق من بعض أنواع الهجمات الشائعة.
+        </p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-top">
+          <h4>معلومات الخادم</h4>
+          <span class="badge low">منخفضة</span>
+        </div>
+
+        <p>
+          بعض معلومات الخادم قد تكون ظاهرة للعميل. يُنصح بتقليل
+          المعلومات غير الضرورية التي يتم كشفها.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <footer>
+    CyberScan © 2026 — للاختبارات الأمنية المصرح بها فقط
+  </footer>
+
+</div>
+
+<script>
+
+function startScan() {
+
+  const target = document.getElementById("target").value.trim();
+
+  if (!target) {
+    alert("اكتب النطاق أو عنوان IP أولاً.");
+    return;
+  }
+
+  const progressBox = document.getElementById("progressBox");
+  const progressBar = document.getElementById("progressBar");
+  const progressPercent = document.getElementById("progressPercent");
+  const progressText = document.getElementById("progressText");
+  const results = document.getElementById("results");
+
+  progressBox.style.display = "block";
+  results.style.display = "none";
+
+  let progress = 0;
+
+  const messages = [
+    "جاري التحقق من الهدف...",
+    "جاري فحص إعدادات الأمان...",
+    "جاري تحليل الترويسات...",
+    "جاري تحليل الإعدادات...",
+    "جاري تجهيز التقرير..."
+  ];
+
+  const interval = setInterval(() => {
+
+    progress += 10;
+
+    progressBar.style.width = progress + "%";
+    progressPercent.textContent = progress + "%";
+
+    const index = Math.min(
+      Math.floor(progress / 20),
+      messages.length - 1
+    );
+
+    progressText.textContent = messages[index];
+
+    if (progress >= 100) {
+
+      clearInterval(interval);
+
+      setTimeout(() => {
+
+        document.getElementById("targetResult").textContent = target;
+
+        results.style.display = "block";
+
+        progressText.textContent = "اكتمل الفحص";
+
+      }, 400);
+    }
+
+  }, 250);
+}
+
+</script>
 
 </body>
 </html>
